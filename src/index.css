@@ -4,136 +4,183 @@
 
 @layer base {
   :root {
-    /* Light theme variables */
     --background: 210 20% 98%;
     --foreground: 222 47% 11%;
+
     --card: 0 0% 100%;
     --card-foreground: 222 47% 11%;
+
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
+
     --primary: 217 91% 60%;
     --primary-foreground: 0 0% 100%;
+
     --secondary: 142 71% 45%;
     --secondary-foreground: 0 0% 100%;
+
     --muted: 210 40% 96%;
     --muted-foreground: 215 16% 47%;
+
     --accent: 210 40% 96%;
     --accent-foreground: 222 47% 11%;
+
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
+
     --border: 214 32% 91%;
     --input: 214 32% 91%;
     --ring: 217 91% 60%;
+
     --radius: 0.75rem;
+
     --marker-blue: 217 91% 60%;
     --marker-green: 142 71% 45%;
     --marker-split-from: 217 91% 60%;
     --marker-split-to: 142 71% 45%;
+
     --panel-bg: 0 0% 100%;
     --panel-border: 214 32% 91%;
     --panel-shadow: 0 10px 40px -10px hsl(222 47% 11% / 0.15);
+
     --map-filter: none;
   }
 
   .dark {
-    /* Dark theme variables */
     --background: 222 47% 8%;
     --foreground: 210 40% 98%;
+
     --card: 222 47% 11%;
     --card-foreground: 210 40% 98%;
+
     --popover: 222 47% 11%;
     --popover-foreground: 210 40% 98%;
+
     --primary: 217 91% 60%;
     --primary-foreground: 0 0% 100%;
+
     --secondary: 142 71% 45%;
     --secondary-foreground: 0 0% 100%;
+
     --muted: 217 33% 17%;
     --muted-foreground: 215 20% 65%;
+
     --accent: 217 33% 17%;
     --accent-foreground: 210 40% 98%;
+
     --destructive: 0 63% 31%;
     --destructive-foreground: 210 40% 98%;
+
     --border: 217 33% 17%;
     --input: 217 33% 17%;
     --ring: 217 91% 60%;
+
     --marker-blue: 217 91% 65%;
     --marker-green: 142 71% 50%;
     --marker-split-from: 217 91% 65%;
     --marker-split-to: 142 71% 50%;
+
     --panel-bg: 222 47% 11%;
     --panel-border: 217 33% 20%;
     --panel-shadow: 0 10px 40px -10px hsl(0 0% 0% / 0.5);
+
     --map-filter: invert(1) hue-rotate(180deg) brightness(0.95) contrast(0.9);
   }
 
-  /* Base styles */
   * {
-    @apply border-border;
-  }
-
-  html, body, #root {
-    @apply h-full w-full m-0 p-0 overflow-hidden;
+    border-color: hsl(var(--border));
   }
 
   body {
-    @apply bg-background text-foreground antialiased;
-  }
-
-  /* Leaflet */
-  .leaflet-container {
-    width: 100%;
-    height: 100%;
     background: hsl(var(--background));
+    color: hsl(var(--foreground));
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
-  .dark .leaflet-tile-pane {
-    filter: var(--map-filter);
+  html, body, #root {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
   }
+}
 
-  .leaflet-control-container {
-    z-index: 400;
-  }
+/* Leaflet styles */
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  background: hsl(var(--background));
+  z-index: 1;
+}
 
-  .leaflet-pane {
-    z-index: 1;
-  }
+.dark .leaflet-tile-pane {
+  filter: var(--map-filter);
+}
 
-  /* Custom markers */
-  .custom-marker {
-    background: transparent !important;
-    border: none !important;
-  }
+.dark .leaflet-container {
+  background: hsl(var(--background));
+}
 
-  .marker-container {
-    @apply relative flex items-center justify-center;
-  }
+.leaflet-control-container {
+  z-index: 400;
+}
 
-  .marker-pulse {
-    @apply absolute rounded-full animate-ping opacity-75;
-  }
+.leaflet-pane {
+  z-index: 1;
+}
 
-  /* Panel animations */
-  @keyframes slide-up {
-    from { transform: translateY(100%); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-  }
+/* Custom marker */
+.custom-marker {
+  background: transparent !important;
+  border: none !important;
+}
 
-  @keyframes fade-scale-out {
-    from { opacity: 1; transform: scale(1); }
-    to { opacity: 0; transform: scale(0.9); }
-  }
+.marker-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  .animate-slide-up {
-    animation: slide-up 0.3s ease-out;
-  }
+.marker-pulse {
+  position: absolute;
+  border-radius: 9999px;
+  opacity: 0.75;
+  animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
 
-  .animate-fade-scale-out {
-    animation: fade-scale-out 0.8s ease-out forwards;
-  }
+/* Panel animations */
+@keyframes slide-up {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
 
-  /* Touch-friendly buttons */
-  .touch-button {
-    @apply min-h-[48px] min-w-[48px] flex items-center justify-center rounded-xl 
-           transition-all duration-200 active:scale-95;
-  }
+@keyframes fade-scale-out {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(0.9); }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out;
+}
+
+.animate-fade-scale-out {
+  animation: fade-scale-out 0.8s ease-out forwards;
+}
+
+/* Touch-friendly buttons */
+.touch-button {
+  min-height: 48px;
+  min-width: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1rem;
+  transition: all 0.2s;
+}
+
+.touch-button:active {
+  transform: scale(0.95);
 }
