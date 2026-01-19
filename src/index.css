@@ -4,184 +4,136 @@
 
 @layer base {
   :root {
+    /* Light theme variables */
     --background: 210 20% 98%;
     --foreground: 222 47% 11%;
-
     --card: 0 0% 100%;
     --card-foreground: 222 47% 11%;
-
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
-
     --primary: 217 91% 60%;
     --primary-foreground: 0 0% 100%;
-
     --secondary: 142 71% 45%;
     --secondary-foreground: 0 0% 100%;
-
     --muted: 210 40% 96%;
     --muted-foreground: 215 16% 47%;
-
     --accent: 210 40% 96%;
     --accent-foreground: 222 47% 11%;
-
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-
     --border: 214 32% 91%;
     --input: 214 32% 91%;
     --ring: 217 91% 60%;
-
     --radius: 0.75rem;
-
-    /* Custom marker colors */
     --marker-blue: 217 91% 60%;
     --marker-green: 142 71% 45%;
     --marker-split-from: 217 91% 60%;
     --marker-split-to: 142 71% 45%;
-
-    /* Panel styles */
     --panel-bg: 0 0% 100%;
     --panel-border: 214 32% 91%;
     --panel-shadow: 0 10px 40px -10px hsl(222 47% 11% / 0.15);
-
-    /* Map tiles */
     --map-filter: none;
   }
 
   .dark {
+    /* Dark theme variables */
     --background: 222 47% 8%;
     --foreground: 210 40% 98%;
-
     --card: 222 47% 11%;
     --card-foreground: 210 40% 98%;
-
     --popover: 222 47% 11%;
     --popover-foreground: 210 40% 98%;
-
     --primary: 217 91% 60%;
     --primary-foreground: 0 0% 100%;
-
     --secondary: 142 71% 45%;
     --secondary-foreground: 0 0% 100%;
-
     --muted: 217 33% 17%;
     --muted-foreground: 215 20% 65%;
-
     --accent: 217 33% 17%;
     --accent-foreground: 210 40% 98%;
-
     --destructive: 0 63% 31%;
     --destructive-foreground: 210 40% 98%;
-
     --border: 217 33% 17%;
     --input: 217 33% 17%;
     --ring: 217 91% 60%;
-
-    /* Custom marker colors */
     --marker-blue: 217 91% 65%;
     --marker-green: 142 71% 50%;
     --marker-split-from: 217 91% 65%;
     --marker-split-to: 142 71% 50%;
-
-    /* Panel styles */
     --panel-bg: 222 47% 11%;
     --panel-border: 217 33% 20%;
     --panel-shadow: 0 10px 40px -10px hsl(0 0% 0% / 0.5);
-
-    /* Dark map tiles filter */
     --map-filter: invert(1) hue-rotate(180deg) brightness(0.95) contrast(0.9);
   }
-}
 
-@layer base {
+  /* Base styles */
   * {
     @apply border-border;
+  }
+
+  html, body, #root {
+    @apply h-full w-full m-0 p-0 overflow-hidden;
   }
 
   body {
     @apply bg-background text-foreground antialiased;
   }
 
-  html, body, #root {
-    @apply h-full w-full m-0 p-0 overflow-hidden;
+  /* Leaflet */
+  .leaflet-container {
+    width: 100%;
+    height: 100%;
+    background: hsl(var(--background));
   }
-}
 
-/* Leaflet styles */
-.leaflet-container {
-  width: 100%;
-  height: 100%;
-  background: hsl(var(--background));
-  z-index: 1;
-}
-
-/* Leaflet dark mode support */
-.dark .leaflet-tile-pane {
-  filter: var(--map-filter);
-}
-
-.dark .leaflet-container {
-  background: hsl(var(--background));
-}
-
-/* Fix Leaflet controls z-index */
-.leaflet-control-container {
-  z-index: 400;
-}
-
-.leaflet-pane {
-  z-index: 1;
-}
-
-/* Custom marker - remove default styles */
-.custom-marker {
-  background: transparent !important;
-  border: none !important;
-}
-
-/* Custom marker styles */
-.marker-container {
-  @apply relative flex items-center justify-center;
-}
-
-.marker-pulse {
-  @apply absolute rounded-full animate-ping opacity-75;
-}
-
-/* Panel animations */
-@keyframes slide-up {
-  from {
-    transform: translateY(100%);
-    opacity: 0;
+  .dark .leaflet-tile-pane {
+    filter: var(--map-filter);
   }
-  to {
-    transform: translateY(0);
-    opacity: 1;
+
+  .leaflet-control-container {
+    z-index: 400;
   }
-}
 
-@keyframes fade-scale-out {
-  from {
-    opacity: 1;
-    transform: scale(1);
+  .leaflet-pane {
+    z-index: 1;
   }
-  to {
-    opacity: 0;
-    transform: scale(0.9);
+
+  /* Custom markers */
+  .custom-marker {
+    background: transparent !important;
+    border: none !important;
   }
-}
 
-.animate-slide-up {
-  animation: slide-up 0.3s ease-out;
-}
+  .marker-container {
+    @apply relative flex items-center justify-center;
+  }
 
-.animate-fade-scale-out {
-  animation: fade-scale-out 0.8s ease-out forwards;
-}
+  .marker-pulse {
+    @apply absolute rounded-full animate-ping opacity-75;
+  }
 
-/* Touch-friendly buttons */
-.touch-button {
-  @apply min-h-[48px] min-w-[48px] flex items-center justify-center rounded-xl 
-         transition-all duration-200 active:scale-95;
+  /* Panel animations */
+  @keyframes slide-up {
+    from { transform: translateY(100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  @keyframes fade-scale-out {
+    from { opacity: 1; transform: scale(1); }
+    to { opacity: 0; transform: scale(0.9); }
+  }
+
+  .animate-slide-up {
+    animation: slide-up 0.3s ease-out;
+  }
+
+  .animate-fade-scale-out {
+    animation: fade-scale-out 0.8s ease-out forwards;
+  }
+
+  /* Touch-friendly buttons */
+  .touch-button {
+    @apply min-h-[48px] min-w-[48px] flex items-center justify-center rounded-xl 
+           transition-all duration-200 active:scale-95;
+  }
 }
