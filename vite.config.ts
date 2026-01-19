@@ -8,6 +8,9 @@ export default defineConfig(({ mode }) => ({
     host: "::",
     port: 8080,
   },
+  build: {
+    outDir: 'dist/public', // збірка потрапляє туди, де сервер її чекає
+  },
   plugins: [react(), mode === "development"].filter(Boolean),
   resolve: {
     alias: {
