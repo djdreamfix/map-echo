@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: map-echo
+    env: node
+    plan: free
+    branch: main
+
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+
+    envVars:
+      - key: NODE_VERSION
+        value: 22.22.0
+      - key: NODE_ENV
+        value: production
